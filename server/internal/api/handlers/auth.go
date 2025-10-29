@@ -385,10 +385,10 @@ func HandleGoogleCallback(w http.ResponseWriter, r *http.Request) {
 	})
 
 	// Redirect user
-	redirectURL := "http://localhost:5173/share/send?status=success"
-	// if flowType == "register" {
-	// 	redirectURL = "http://localhost:5173/share/receive"
-	// }
+	redirectURL := "http://localhost:5173/share/send?status=success_login"
+	if flowType == "register" {
+		redirectURL = "http://localhost:5173/share/send?status=success_register"
+	}
 
 	http.Redirect(w, r, redirectURL, http.StatusTemporaryRedirect)
 }

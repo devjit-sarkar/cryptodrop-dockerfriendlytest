@@ -22,25 +22,22 @@ const Login: React.FC = () => {
 
 	const [showPassword, setShowPassword] = useState(false);
 	const location = useLocation(); // get URL query params
-	const navigate = useNavigate(); // for redirection
+	// const navigate = useNavigate(); // for redirection
 
 	// handle Google OAuth redirect messages
 	useEffect(() => {
-		// console.log("Use effect reg");
-		const params = new URLSearchParams(location.search);
-		const error = params.get('error');
-		const status = params.get('status');
-		// console.log("Use effect log");
+	const params = new URLSearchParams(location.search);
+	const error = params.get('error');
+	
 		if (error === 'user_already_exists') {
-			toast.error('You need to register first!');
-			console.log("User not found error!");
-			// navigate('/register', { replace: true });
-		} else if (status === 'success') {
-			toast.success('Successfully logged in!');
-			console.log("Success");
-			// navigate('/share/send', { replace: true });
+			setTimeout(()=>{
+			toast.error('**User already has an account! Please login to continue.**');
+			},300);
+			console.log("User already exists!");
+			// Optional: Clear the query params after showing toast
+			// navigate('/login', { replace: true });
 		}
-	}, [location.search, navigate]);
+	}, [location.search]); // Remove navigate from dependencies
 
 	const onSubmit = (data: LogInFormFields) => {
 		console.log('Login Data', data);

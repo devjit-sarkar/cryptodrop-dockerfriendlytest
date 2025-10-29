@@ -29,21 +29,19 @@ const Register: React.FC = () => {
 	//const password = watch("password");
 	// Check for ?error=exists in URL
 	useEffect(() => {
-		// console.log("Use effect reg");
-		const params = new URLSearchParams(location.search);
-		const error = params.get('error');
-		const status = params.get('status');
-		// console.log("Use effect reg");
-		if (error === 'user_not_found') {
-			toast.error('You already have an account. Please log in instead.');
-			console.log("User already exists error");
-			// navigate('/login', { replace: true });
-		} else if (status === 'success') {
-			toast.success('Successfully Registered!');
-			console.log("Success");
-			// navigate('/share/send', { replace: true });
-		}
-	}, [location.key]);
+	const params = new URLSearchParams(location.search);
+	const error = params.get('error');
+	
+	if (error === 'user_not_found') {
+		setTimeout(()=>{
+		toast.error('**No account found! Please register to continue.**');
+		},300);
+		console.log("**✅ No account found - Register now**");
+		// navigate('/register', { replace: true });  // Clears ?error= from URL
+	}
+	// Remove status=success (doesn't redirect here)
+	}, [location.search]);  // ← MAGIC LINE
+
 	const onSubmit = (data: RegisterFormFields) => {
 		console.log('Form Data:', data);
 		toast.success('Registration Successful');
